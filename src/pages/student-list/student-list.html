@@ -9,5 +9,14 @@
 
 
 <ion-content padding>
-
+  <ion-list>
+    <button ion-item *ngFor="let student of students" (click)="studentSelected(student)">
+      {{ student.name }}
+    </button>
+  </ion-list>
+  <ion-list>
+    <ion-item>
+      <button ion-item block > <ion-icon name="add-circle"></ion-icon> Add User</button>
+    </ion-item>
+  </ion-list>
 </ion-content>

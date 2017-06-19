@@ -2,10 +2,14 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StudentService } from './services/student.service';
+import {CompanyService} from './services/company.service';
 
 import { HomePage } from '../pages/home/home';
+
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [StudentService, CompanyService]
 })
 export class MyApp {
   rootPage:any = HomePage;

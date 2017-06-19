@@ -1,24 +1,32 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {CompanyService} from '../../app/services/company.service';
+import {ShowCompanyPage} from '../show-company/show-company';
 
-/**
- * Generated class for the CompanyListPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-company-list',
   templateUrl: 'company-list.html',
 })
 export class CompanyListPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  companies: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private companyService: CompanyService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CompanyListPage');
   }
-
+  ngOnInit() {
+    this.getCompanies();
+  }
+  getCompanies() {
+    this.companyService.getCompanies().subscribe(response => {
+      this.companies = response;
+    })
+  }
+  companySelected(company) {
+    this.navCtrl.push(ShowCompanyPage, {
+      company: company
+    });
+  }
 }

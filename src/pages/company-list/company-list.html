@@ -9,5 +9,14 @@
 
 
 <ion-content padding>
-
+  <ion-list>
+    <button ion-item *ngFor="let company of companies" (click)="companySelected(company)">
+      {{ company.name }}
+    </button>
+  </ion-list>
+  <ion-list>
+    <ion-item>
+      <button ion-item block> <ion-icon name="add-circle"></ion-icon> Register  new company</button>
+    </ion-item>
+  </ion-list>
 </ion-content>
