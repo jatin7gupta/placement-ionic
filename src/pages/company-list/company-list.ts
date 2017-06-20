@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {CompanyService} from '../../app/services/company.service';
 import {ShowCompanyPage} from '../show-company/show-company';
+import {HomePage} from '../home/home';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,8 @@ import {ShowCompanyPage} from '../show-company/show-company';
 })
 export class CompanyListPage {
   companies: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private companyService: CompanyService) {
+  eor: any;
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private companyService: CompanyService) {
   }
 
   ionViewDidLoad() {
@@ -22,11 +24,30 @@ export class CompanyListPage {
   getCompanies() {
     this.companyService.getCompanies().subscribe(response => {
       this.companies = response;
-    })
+    },
+      err => {
+        this.eor = err;
+        console.log(this.eor.status);
+        this.presentToast();
+      }
+    )
   }
   companySelected(company) {
     this.navCtrl.push(ShowCompanyPage, {
       company: company
     });
+  }
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Please Check your Internet Connection',
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.onDidDismiss(() => {
+      this.navCtrl.pop();
+    });
+
+    toast.present();
   }
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {StudentService} from '../../app/services/student.service';
 import {ShowStudentPage} from '../show-student/show-student';
+import {HomePage} from '../home/home';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,8 @@ import {ShowStudentPage} from '../show-student/show-student';
 })
 export class StudentListPage {
  students: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private studentService: StudentService) {
+ eor: any;
+  constructor(public navCtrl: NavController,  private toastCtrl: ToastController, public navParams: NavParams, private studentService: StudentService) {
   }
 
   ionViewDidLoad() {
@@ -22,11 +24,30 @@ export class StudentListPage {
   getStudents() {
     this.studentService.getStudents().subscribe(response => {
       this.students = response;
-    })
+    },
+      err => {
+        this.eor = err;
+        this.presentToast();
+        console.log(this.eor.status);
+      }
+    )
   }
   studentSelected(student) {
     this.navCtrl.push(ShowStudentPage, {
       student: student
     });
+  }
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Please Check your Internet Connection',
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.onDidDismiss(() => {
+      this.navCtrl.pop();
+    });
+
+    toast.present();
   }
 }

@@ -6,10 +6,11 @@ import { StudentService } from './services/student.service';
 import {CompanyService} from './services/company.service';
 
 import { HomePage } from '../pages/home/home';
+import {RegistrationService} from './services/registration.service';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [StudentService, CompanyService]
+  providers: [StudentService, CompanyService, RegistrationService]
 })
 export class MyApp {
   rootPage:any = HomePage;

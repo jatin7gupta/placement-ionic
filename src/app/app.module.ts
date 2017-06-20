@@ -11,6 +11,7 @@ import {StudentListPage} from '../pages/student-list/student-list';
 import {CompanyListPage} from '../pages/company-list/company-list';
 import {ShowStudentPage} from '../pages/show-student/show-student';
 import {ShowCompanyPage} from '../pages/show-company/show-company';
+import {ShowRegistrationsPage} from '../pages/show-registrations/show-registrations';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {ShowCompanyPage} from '../pages/show-company/show-company';
     StudentListPage,
     CompanyListPage,
     ShowStudentPage,
-    ShowCompanyPage
+    ShowCompanyPage,
+    ShowRegistrationsPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import {ShowCompanyPage} from '../pages/show-company/show-company';
     StudentListPage,
     CompanyListPage,
     ShowStudentPage,
-    ShowCompanyPage
+    ShowCompanyPage,
+    ShowRegistrationsPage
   ],
   providers: [
     StatusBar,

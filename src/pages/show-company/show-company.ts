@@ -1,24 +1,32 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {combineAll} from "rxjs/operator/combineAll";
+import {ShowRegistrationsPage} from '../show-registrations/show-registrations';
 
-/**
- * Generated class for the ShowCompanyPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
   selector: 'page-show-company',
   templateUrl: 'show-company.html',
 })
 export class ShowCompanyPage {
+  company: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.company = navParams.get('company');
+    console.log(this.company);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShowCompanyPage');
+  }
+  saveCompany() {
+    console.log('save');
+  }
+  showRegistrations(company) {
+    this.navCtrl.push(ShowRegistrationsPage, {
+      company: company
+    });
   }
 
 }

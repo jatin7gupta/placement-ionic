@@ -1,18 +1,82 @@
-<!--
-  Generated template for the ShowCompanyPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>show-company</ion-title>
+    <ion-title>{{ company.name }}   </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openModal()">
+        Edit
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div>Name</div>
+            </ion-col>
+            <ion-col offset-4>
+              <div>{{ company.name }}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div>Branches</div>
+            </ion-col>
+            <ion-col offset-4>
+              <div>{{ company.name }}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div>Date</div>
+            </ion-col>
+            <ion-col offset-4>
+              <div>{{ company.date_of_Placement }}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <div>Name</div>
+            </ion-col>
+            <ion-col offset-4>
+              <div>{{ company.name }}</div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <button ion-item (click)="showRegistrations(company)">
+        Registration List
+      </button>
+    </ion-list>
+  </ion-card>
+  <ion-list>
+    <ion-item (click)="saveCompany()">
+      <ion-icon name="checkmark"></ion-icon>
+      Save
+    </ion-item>
+    <button ion-item>
+      <ion-icon name="add-circle"></ion-icon>
+      Register Student
+    </button>
+  </ion-list>
 </ion-content>
