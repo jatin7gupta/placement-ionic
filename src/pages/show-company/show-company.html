@@ -9,66 +9,26 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-  <ion-card>
-    <ion-list>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>Name</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ company.name }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>Branches</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ company.name }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>Date</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ company.date_of_Placement }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>Name</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ company.name }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <button ion-item (click)="showRegistrations(company)">
-        Registration List
-      </button>
-    </ion-list>
-  </ion-card>
+  <ion-list>
+    <ion-item>
+      <ion-label>Name </ion-label>
+      <ion-input type="text" [(ngModel)]="company.name" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Branches </ion-label>
+      <ion-input type="text" [(ngModel)]="company.name" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate" pickerFormat="DD/MM/YYYY" ></ion-datetime>
+    </ion-item>
+    <button ion-item (click)="showRegistrations(company)">
+      Registration List
+    </button>
+  </ion-list>
   <ion-list>
     <ion-item (click)="saveCompany()">
       <ion-icon name="checkmark"></ion-icon>
@@ -79,4 +39,5 @@
       Register Student
     </button>
   </ion-list>
+
 </ion-content>

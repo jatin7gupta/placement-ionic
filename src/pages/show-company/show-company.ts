@@ -11,6 +11,8 @@ import {ShowRegistrationsPage} from '../show-registrations/show-registrations';
 })
 export class ShowCompanyPage {
   company: any;
+  test: any;
+  myDate: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.company = navParams.get('company');
@@ -22,6 +24,7 @@ export class ShowCompanyPage {
   }
   saveCompany() {
     console.log('save');
+    console.log(this.myDate);
   }
   showRegistrations(company) {
     this.navCtrl.push(ShowRegistrationsPage, {

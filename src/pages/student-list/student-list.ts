@@ -50,4 +50,5 @@ export class StudentListPage {
 
     toast.present();
   }
+
 }

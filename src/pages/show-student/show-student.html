@@ -14,58 +14,77 @@
 
 
 <ion-content padding>
-  <ion-card>
-    <ion-list>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>Name</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ student.name }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>Branch</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ student.department }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>Roll No</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ student.rollno }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-      <ion-item>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <div>CGPA</div>
-            </ion-col>
-            <ion-col offset-4>
-              <div>{{ student.cgpa }}</div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-    </ion-list>
-  </ion-card>
+  <!--<ion-card>-->
+    <!--<ion-list>-->
+      <!--<ion-item>-->
+        <!--<ion-grid>-->
+          <!--<ion-row>-->
+            <!--<ion-col>-->
+              <!--<div>Name</div>-->
+            <!--</ion-col>-->
+            <!--<ion-col offset-4>-->
+              <!--<div>{{ student.name }}</div>-->
+            <!--</ion-col>-->
+          <!--</ion-row>-->
+        <!--</ion-grid>-->
+      <!--</ion-item>-->
+      <!--<ion-item>-->
+        <!--<ion-grid>-->
+          <!--<ion-row>-->
+            <!--<ion-col>-->
+              <!--<div>Branch</div>-->
+            <!--</ion-col>-->
+            <!--<ion-col offset-4>-->
+              <!--<div>{{ student.department }}</div>-->
+            <!--</ion-col>-->
+          <!--</ion-row>-->
+        <!--</ion-grid>-->
+      <!--</ion-item>-->
+      <!--<ion-item>-->
+        <!--<ion-grid>-->
+          <!--<ion-row>-->
+            <!--<ion-col>-->
+              <!--<div>Roll No</div>-->
+            <!--</ion-col>-->
+            <!--<ion-col offset-4>-->
+              <!--<div>{{ student.rollno }}</div>-->
+            <!--</ion-col>-->
+          <!--</ion-row>-->
+        <!--</ion-grid>-->
+      <!--</ion-item>-->
+      <!--<ion-item>-->
+        <!--<ion-grid>-->
+          <!--<ion-row>-->
+            <!--<ion-col>-->
+              <!--<div>CGPA</div>-->
+            <!--</ion-col>-->
+            <!--<ion-col offset-4>-->
+              <!--<div>{{ student.cgpa }}</div>-->
+            <!--</ion-col>-->
+          <!--</ion-row>-->
+        <!--</ion-grid>-->
+      <!--</ion-item>-->
+    <!--</ion-list>-->
+  <!--</ion-card>-->
+  <ion-list>
+    <ion-item>
+      <ion-label>Name </ion-label>
+      <ion-input type="text" [(ngModel)]="student.name" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Branch </ion-label>
+      <ion-input type="text" [(ngModel)]="student.department" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Roll No </ion-label>
+      <ion-input type="text" [(ngModel)]="student.rollno" text-right></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>CGPA </ion-label>
+      <ion-input type="text" [(ngModel)]="student.cgpa" text-right></ion-input>
+    </ion-item>
+
+  </ion-list>
   <ion-list>
     <ion-item (click)="saveStudent()">
       <ion-icon name="checkmark"></ion-icon>
