@@ -4,7 +4,7 @@
   <ion-navbar>
     <ion-title>{{ company.name }}   </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="openModal()">
+      <button ion-button icon-only (click)="onEditClick()">
         Edit
       </button>
     </ion-buttons>
@@ -15,25 +15,25 @@
   <ion-list>
     <ion-item>
       <ion-label>Name </ion-label>
-      <ion-input type="text" [(ngModel)]="company.name" text-right></ion-input>
+      <ion-input type="text" [(ngModel)]="company.name" [disabled]="editValue" text-right></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Branches </ion-label>
-      <ion-input type="text" [(ngModel)]="company.name" text-right></ion-input>
+      <ion-input type="text" [(ngModel)]="company.name" [disabled]="editValue" text-right></ion-input>
     </ion-item>
     <ion-item>
       <ion-label>Date</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate" pickerFormat="DD/MM/YYYY" ></ion-datetime>
+      <ion-datetime displayFormat="MM-DD-YYYY" [(ngModel)]="ionicDateDisp" [disabled]="editValue" pickerFormat="MM DD YYYY" ></ion-datetime>
     </ion-item>
     <button ion-item (click)="showRegistrations(company)">
       Registration List
     </button>
   </ion-list>
   <ion-list>
-    <ion-item (click)="saveCompany()">
+    <button ion-button clear [disabled]="editValue" (click)="saveCompany()">
       <ion-icon name="checkmark"></ion-icon>
       Save
-    </ion-item>
+    </button>
     <button ion-item>
       <ion-icon name="add-circle"></ion-icon>
       Register Student
