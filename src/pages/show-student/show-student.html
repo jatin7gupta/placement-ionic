@@ -8,29 +8,47 @@
         Edit
       </button>
     </ion-buttons>
+    <ion-buttons end >
+      <button ion-button clear (click)="onDeleteClick()">
+        <ion-icon name="trash"  >
+        </ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
-
 
 <ion-content padding>
   <ion-list>
     <ion-item>
       <ion-label>Name </ion-label>
-      <ion-input type="text" [(ngModel)]="student.name" [disabled]="editValue" text-right></ion-input>
+      <ion-input type="text" id="name" [(ngModel)]="student.name" minlength="2" maxlength="70" [disabled]="editValue" text-right ></ion-input>
+    </ion-item>
+    <ion-item *ngIf='!hasValidName'>
+      <font size="2">Enter a valid name</font>
     </ion-item>
     <ion-item>
       <ion-label>Branch </ion-label>
       <ion-input type="text" [(ngModel)]="student.department" [disabled]="editValue" text-right></ion-input>
     </ion-item>
+    <ion-item *ngIf='!hasValidDepartment'>
+      <font size="2">Enter a valid Branch</font>
+    </ion-item>
     <ion-item>
       <ion-label>Roll No </ion-label>
-      <ion-input type="text" [(ngModel)]="student.rollno" [disabled]="editValue" text-right></ion-input>
+      <ion-input type="number" [(ngModel)]="student.rollno" [disabled]="editValue" text-right></ion-input>
+    </ion-item>
+    <ion-item *ngIf='!hasValidRollNo'>
+      <font size="2">Enter a valid Roll No</font>
     </ion-item>
     <ion-item>
       <ion-label>CGPA </ion-label>
-      <ion-input type="text" [(ngModel)]="student.cgpa" [disabled]="editValue" text-right></ion-input>
+      <ion-input type="number" [(ngModel)]="student.cgpa" [disabled]="editValue" text-right></ion-input>
     </ion-item>
+    <ion-item *ngIf='!hasValidCGPA'>
+      <font size="2">Enter a valid CGPA</font>
+    </ion-item>
+
 
   </ion-list>
   <ion-list>

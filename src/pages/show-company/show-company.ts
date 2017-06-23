@@ -41,18 +41,17 @@ export class ShowCompanyPage {
       //perform database modify
     }
     else {
-
     }
   }
   onEditClick(){
     this.editValue = false;
-
   }
   showRegistrations(company) {
     this.navCtrl.push(ShowRegistrationsPage, {
       company: company
     });
   }
+  onDeleteClick() {
 
-
+  }
 }
