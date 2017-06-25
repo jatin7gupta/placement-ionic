@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {StudentService} from '../../app/services/student.service';
+import {StudentListPage} from "../student-list/student-list";
 
 
 @IonicPage()
@@ -14,9 +16,10 @@ export class ShowStudentPage {
   hasValidRollNo = true;
   hasValidCGPA = true;
   hasValidDepartment = true;
-  departmentArray = ["CSE","IT","ME","CV","BBA","BCOM","EEE","ECE"];
+  departmentArray = ["CSE", "ME", "CV", "EEE", "ECE"];
+  eor: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, public studentService: StudentService) {
     this.student = navParams.get('student');
   }
 
@@ -24,51 +27,94 @@ export class ShowStudentPage {
     console.log('ionViewDidLoad ShowStudentPage');
     console.log(this.student);
   }
-  onEditClick(){
+
+  onEditClick() {
     this.editValue = false;
   }
+
   saveStudent() {
-    if(this.editValue == false) {
-     this.hasValidName = this.hasValidCGPA = this.hasValidDepartment = this.hasValidRollNo = true;
-     let validate = true;
-     if(this.student.name === undefined || this.student.name.length < 2) {
-       this.hasValidName = false;
-       validate = false;
-     }
-     if(this.student.cgpa === undefined || this.student.cgpa == null || this.student.cgpa < 0 || this.student.cgpa > 10) {
-       this.hasValidCGPA = false;
-       validate = false;
-     }
-     console.log(this.student.rollno);
-     console.log(this.student.rollno === undefined);
-     console.log(this.student.rollno == null);
-     console.log(this.student.rollno > 0);
-     console.log(typeof (this.student.rollno));
-     if(this.student.rollno === undefined || this.student.rollno < 1 || this.student.rollno == null ) {
-       this.hasValidRollNo = false;
-       validate = false;
-     }
-     if(this.student.department === undefined || this.student.department == null || this.student.department.length == 0) {
-       console.log(this.departmentArray.indexOf(this.student.department));
-       if(!this.departmentArray.indexOf(this.student.department)){
-        this.hasValidDepartment = false;
+    if (this.editValue == false) {
+      this.hasValidName = this.hasValidCGPA = this.hasValidDepartment = this.hasValidRollNo = true;
+      let validate = true;
+      if (this.student.name === undefined || this.student.name.length < 2) {
+        this.hasValidName = false;
         validate = false;
-       }
-     }
-     if(!validate) {
+      }
+      if (this.student.cgpa === undefined || this.student.cgpa == null || this.student.cgpa < 0 || this.student.cgpa > 10) {
+        this.hasValidCGPA = false;
+        validate = false;
+      }
+      if (this.student.rollno === undefined || this.student.rollno < 1 || this.student.rollno == null) {
+        this.hasValidRollNo = false;
+        validate = false;
+      }
+      if (this.student.department === undefined || this.student.department == null || this.student.department.length > 0) {
+        if (this.departmentArray.indexOf(this.student.department) === -1) {
+          this.hasValidDepartment = false;
+          validate = false;
+        }
+      }
+      if (!validate) {
         console.log("Not validated");
       }
-      else{
+      else {
         console.log(this.student);
       }
-      console.log(this.student);
+      this.studentService.modifyStudent(this.student).subscribe(response => {
+
+          let toast = this.toastCtrl.create({
+            message: 'Item Saved',
+            duration: 500,
+            position: 'middle',
+          });
+          toast.onDidDismiss(() => {
+            this.navCtrl.popToRoot();
+          });
+          toast.present();
+        },
+        err => {
+          this.eor = err;
+          this.presentToast();
+          console.log(this.eor.status);
+        })
     }
     else {
 
     }
   }
-  onDeleteClick() {
 
+  onDeleteClick() {
+    this.studentService.deleteStudent(this.student).subscribe(response => {
+        console.log(response);
+        let toast = this.toastCtrl.create({
+          message: 'Item Deleted',
+          duration: 500,
+          position: 'middle',
+        });
+        toast.onDidDismiss(() => {
+          this.navCtrl.popToRoot();
+        });
+        toast.present();
+      },
+      err => {
+        this.eor = err;
+        this.presentToast();
+        console.log(this.eor.status);
+      })
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Please Check your Internet Connection',
+      duration: 3000,
+      position: 'middle'
+    });
+
+    toast.onDidDismiss(() => {
+      this.navCtrl.pop();
+    });
+
+    toast.present();
   }
 
 }

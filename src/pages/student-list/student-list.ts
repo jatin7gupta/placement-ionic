@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {StudentService} from '../../app/services/student.service';
 import {ShowStudentPage} from '../show-student/show-student';
-import {HomePage} from '../home/home';
+import {AddStudentPage} from '../add-student/add-student';
 
 @IonicPage()
 @Component({
@@ -50,5 +50,7 @@ export class StudentListPage {
 
     toast.present();
   }
-
+  addStudent() {
+    this.navCtrl.push(AddStudentPage);
+  }
 }
