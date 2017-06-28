@@ -14,5 +14,9 @@
 
 
 <ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let reg of registrations">{{reg.student_Id}}</ion-item>
 
+  </ion-list>
+  {{registrations}}
 </ion-content>

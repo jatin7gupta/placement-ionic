@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {ShowRegistrationsPage} from '../show-registrations/show-registrations';
+import {CompanyService} from '../../app/services/company.service';
+import {RegistrationService} from '../../app/services/registration.service';
 
 
 @IonicPage()
@@ -14,9 +16,11 @@ export class ShowCompanyPage {
   ionicDate: any;
   ionicDateDisp: any;
   editValue = true;
+  eor: any;
+  registration : any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public companyService: CompanyService, public toastCtrl: ToastController ) {
     this.company = navParams.get('company');
     console.log(this.company);
   }
@@ -37,8 +41,26 @@ export class ShowCompanyPage {
      console.log(date.getMonth()+1);
      console.log(date.getDate());
      console.log(date.getFullYear());
+     let updatedDate = date.getMonth()+1+ "-" + date.getDate() +"-"+ date.getFullYear();
+     console.log(updatedDate);
     if(this.editValue == false) {
-      //perform database modify
+      this.companyService.updateCompany(this.company, updatedDate).subscribe(response => {
+          console.log(response);
+          let toast = this.toastCtrl.create({
+            message: 'Item Saved',
+            duration: 500,
+            position: 'middle',
+          });
+          toast.onDidDismiss(() => {
+            this.navCtrl.popToRoot();
+          });
+          toast.present();
+        },
+        err => {
+          this.eor = err;
+          this.presentToast();
+          console.log(this.eor.status);
+        })
     }
     else {
     }
@@ -47,11 +69,42 @@ export class ShowCompanyPage {
     this.editValue = false;
   }
   showRegistrations(company) {
+
     this.navCtrl.push(ShowRegistrationsPage, {
-      company: company
+      company: company//,
+      //registration : this.registration
     });
   }
-  onDeleteClick() {
+  onDeleteClick(company) {
+    this.companyService.delateCompany(company).subscribe(response => {
+        console.log(response);
+        let toast = this.toastCtrl.create({
+          message: 'Item Deleted',
+          duration: 500,
+          position: 'middle',
+        });
+        toast.onDidDismiss(() => {
+          this.navCtrl.popToRoot();
+        });
+        toast.present();
+      },
+      err => {
+        this.eor = err;
+        this.presentToast();
+        console.log(this.eor.status);
+      })
+  }
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Please Check your Internet Connection',
+      duration: 3000,
+      position: 'middle'
+    });
 
+    toast.onDidDismiss(() => {
+      this.navCtrl.pop();
+    });
+
+    toast.present();
   }
 }
