@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angula
 import {CompanyService} from '../../app/services/company.service';
 import {ShowCompanyPage} from '../show-company/show-company';
 import {HomePage} from '../home/home';
+import {AddCompanyPage} from '../add-company/add-company';
 
 @IonicPage()
 @Component({
@@ -49,5 +50,8 @@ export class CompanyListPage {
     });
 
     toast.present();
+  }
+  addCompany(){
+    this.navCtrl.push(AddCompanyPage);
   }
 }

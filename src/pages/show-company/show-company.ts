@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {ShowRegistrationsPage} from '../show-registrations/show-registrations';
 import {CompanyService} from '../../app/services/company.service';
-import {RegistrationService} from '../../app/services/registration.service';
+import {RegisterStudentPage} from "../register-student/register-student";
 
 
 @IonicPage()
@@ -18,11 +18,17 @@ export class ShowCompanyPage {
   editValue = true;
   eor: any;
   registration : any;
+  hasValidDate: boolean;
+  hasValidName: boolean;
+  validate: boolean;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public companyService: CompanyService, public toastCtrl: ToastController ) {
     this.company = navParams.get('company');
     console.log(this.company);
+    this.hasValidName = true;
+    this.validate = true;
+    this.hasValidDate = true;
   }
 
   ionViewDidLoad() {
@@ -37,6 +43,9 @@ export class ShowCompanyPage {
     console.log(this.ionicDate);
   }
   saveCompany() {
+    this.hasValidName = true;
+    this.validate = true;
+    this.hasValidDate = true;
     let date = new Date(this.ionicDateDisp);
      console.log(date.getMonth()+1);
      console.log(date.getDate());
@@ -44,23 +53,34 @@ export class ShowCompanyPage {
      let updatedDate = date.getMonth()+1+ "-" + date.getDate() +"-"+ date.getFullYear();
      console.log(updatedDate);
     if(this.editValue == false) {
-      this.companyService.updateCompany(this.company, updatedDate).subscribe(response => {
-          console.log(response);
-          let toast = this.toastCtrl.create({
-            message: 'Item Saved',
-            duration: 500,
-            position: 'middle',
-          });
-          toast.onDidDismiss(() => {
-            this.navCtrl.popToRoot();
-          });
-          toast.present();
-        },
-        err => {
-          this.eor = err;
-          this.presentToast();
-          console.log(this.eor.status);
-        })
+      if(this.company.name === undefined || this.company.name.length <2){
+        this.hasValidName = false;
+        this.validate = false;
+      }
+      if(this.ionicDateDisp === undefined) {
+        this.hasValidDate = false;
+        this.validate = false;
+      }
+      if(this.validate){
+        this.companyService.updateCompany(this.company, updatedDate).subscribe(response => {
+            console.log(response);
+            let toast = this.toastCtrl.create({
+              message: 'Item Saved',
+              duration: 500,
+              position: 'middle',
+            });
+            toast.onDidDismiss(() => {
+              this.navCtrl.popToRoot();
+            });
+            toast.present();
+          },
+          err => {
+            this.eor = err;
+            this.presentToast();
+            console.log(this.eor.status);
+          })
+      }
+
     }
     else {
     }
@@ -93,6 +113,11 @@ export class ShowCompanyPage {
         this.presentToast();
         console.log(this.eor.status);
       })
+  }
+  registerStudent(company){
+    this.navCtrl.push(RegisterStudentPage, {
+      company: company
+    });
   }
   presentToast() {
     let toast = this.toastCtrl.create({

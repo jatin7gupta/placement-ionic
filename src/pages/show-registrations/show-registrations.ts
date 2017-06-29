@@ -19,14 +19,15 @@ export class ShowRegistrationsPage {
     rollno: string,
     cgpa: string,
     department: string
-  };
+  }[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public studentService: StudentService, public toastCtrl: ToastController, public registrationService: RegistrationService) {
     this.company = navParams.get('company');
     console.log(this.company);
     this.registrations = navParams.get('registration');
     this.studentService.getStudents().subscribe(response => {
-        this.students = response;
+        this.students = response; //this is async. for loops execute before the students can came
+        this.init();
         console.log(this.students);
       },
       err => {
@@ -37,27 +38,31 @@ export class ShowRegistrationsPage {
     );
     this.registrationService.getRegistrations().subscribe(response =>{
       this.registrations = response;
+      this.init(); //semaphore has poor performance. Created a local anonymous callback
       console.log(this.registrations);
     },err => {
       console.log(err);
       this.presentToast();
     });
+  }
 
-    // for(let regObj of this.registrations) {
-    //   if (regObj.cId === this.company._id) {
-    //     for (let studentObj of this.students) {
-    //       if (studentObj._id === regObj.sId) {
-    //           this.studentDisp.push({
-    //             _id: studentObj._id,
-    //             name: studentObj.name,
-    //             department: studentObj.department,
-    //             roll_number: studentObj.rollno,
-    //             cgpa: studentObj.cgpa,
-    //           });
-    //       }
-    //     }
-    //   }
-    // }
+  init(){//done
+    if(this.registrations === undefined || this.students === undefined) return;
+    for(let regObj of this.registrations) {
+      if (regObj.cId === this.company._id) {
+        for (let studentObj of this.students) {
+          if (studentObj._id === regObj.sId) {
+            this.studentDisp.push({
+              id: studentObj._id,
+              name: studentObj.name,
+              department: studentObj.department,
+              rollno: studentObj.rollno,
+              cgpa: studentObj.cgpa,
+            });
+          }
+        }
+      }
+    }
   }
 
   ionViewDidLoad() {

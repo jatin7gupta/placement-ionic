@@ -2,26 +2,17 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ company.name }}   </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="onEditClick()">
-        Edit
-      </button>
-    </ion-buttons >
-    <ion-buttons end >
-      <button ion-button clear (click)="onDeleteClick(company)">
-        <ion-icon name="trash"  >
-        </ion-icon>
-      </button>
-    </ion-buttons>
+    <ion-title>Add Company</ion-title>
   </ion-navbar>
+
 </ion-header>
+
 
 <ion-content padding>
   <ion-list>
     <ion-item>
       <ion-label>Name </ion-label>
-      <ion-input type="text" [(ngModel)]="company.name" [disabled]="editValue" minlength="2" maxlength="70" text-right></ion-input>
+      <ion-input type="text" [(ngModel)]="name" [disabled]="editValue" minlength="2" maxlength="70" text-right></ion-input>
     </ion-item>
     <ion-item *ngIf='!hasValidName'>
       <font size="2">Enter a valid name</font>
@@ -33,19 +24,12 @@
     <ion-item *ngIf='!hasValidDate'>
       <font size="2">Enter a valid Date</font>
     </ion-item>
-    <button ion-item (click)="showRegistrations(company)">
-      Registration List
-    </button>
   </ion-list>
   <ion-list>
     <button ion-button clear [disabled]="editValue" (click)="saveCompany()">
       <ion-icon name="checkmark"></ion-icon>
       Save
     </button>
-    <button ion-item (click)="registerStudent(company)">
-      <ion-icon name="add-circle"></ion-icon>
-      Register/Unregister Student
-    </button>
-  </ion-list>
 
+  </ion-list>
 </ion-content>

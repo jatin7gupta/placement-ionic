@@ -8,6 +8,8 @@ export class CompanyService {
   baseURL: string;
 
 
+
+
   constructor(http: Http) {
     this.http = http;
     this.baseURL = "http://localhost:3000/api/companies";
@@ -39,5 +41,18 @@ export class CompanyService {
     return this.http.delete(this.baseURL + "/remove?id=" + companyId, {}, {headers : header})
       .map(res => res.json());
 
+  }
+  addCompany(name, date_of_Placement) {
+    var header = new Headers();
+    header.append("Content-Type", "application/json");
+    let data = {
+      "name" : name,
+      "date_of_Placement" : date_of_Placement
+    };
+    let JSONPacket = JSON.stringify(data);
+    console.log(JSONPacket);
+
+    return this.http.post(this.baseURL + "/add", JSONPacket, {headers : header})
+      .map(res => res.json());
   }
 }
