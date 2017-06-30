@@ -1,8 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {StudentService} from '../../app/services/student.service';
-import {StudentListPage} from "../student-list/student-list";
-
 
 @IonicPage()
 @Component({
@@ -25,14 +23,13 @@ export class ShowStudentPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShowStudentPage');
-    console.log(this.student);
   }
 
   onEditClick() {
     this.editValue = false;
   }
 
-  saveStudent() {
+  saveStudent() { //update student
     if (this.editValue == false) {
       this.hasValidName = this.hasValidCGPA = this.hasValidDepartment = this.hasValidRollNo = true;
       let validate = true;
@@ -58,60 +55,38 @@ export class ShowStudentPage {
         console.log("Not validated");
       }
       else {
-        console.log(this.student);
+        this.studentService.modifyStudent(this.student).subscribe(response => {
+            this.presentToast('Modified');
+          },
+          err => {
+            this.eor = err;
+            this.presentToast('Check Internet, Could not modify');
+            console.log(this.eor.status);
+          })
       }
-      this.studentService.modifyStudent(this.student).subscribe(response => {
-
-          let toast = this.toastCtrl.create({
-            message: 'Item Saved',
-            duration: 500,
-            position: 'middle',
-          });
-          toast.onDidDismiss(() => {
-            this.navCtrl.popToRoot();
-          });
-          toast.present();
-        },
-        err => {
-          this.eor = err;
-          this.presentToast();
-          console.log(this.eor.status);
-        })
-    }
-    else {
-
     }
   }
 
-  onDeleteClick() {
+  onDeleteClick() { //Delete Student
     this.studentService.deleteStudent(this.student).subscribe(response => {
-        console.log(response);
-        let toast = this.toastCtrl.create({
-          message: 'Item Deleted',
-          duration: 500,
-          position: 'middle',
-        });
-        toast.onDidDismiss(() => {
-          this.navCtrl.popToRoot();
-        });
-        toast.present();
+        this.presentToast('Deleted');
       },
       err => {
         this.eor = err;
-        this.presentToast();
+        this.presentToast('Check Internet, Could not Delete');
         console.log(this.eor.status);
       })
   }
 
-  presentToast() {
+  presentToast(message) {
     let toast = this.toastCtrl.create({
-      message: 'Please Check your Internet Connection',
-      duration: 3000,
+      message: message,
+      duration: 1000,
       position: 'middle'
     });
 
     toast.onDidDismiss(() => {
-      this.navCtrl.pop();
+      this.navCtrl.popToRoot();
     });
 
     toast.present();

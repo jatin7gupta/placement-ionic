@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {CompanyService} from "../../app/services/company.service";
 
@@ -13,8 +13,9 @@ export class AddCompanyPage {
   hasValidName: boolean;
   hasValidDate: boolean;
   validate: boolean;
-  eor: any;
-  constructor(public navCtrl: NavController,public toastCtrl: ToastController , public navParams: NavParams, public companyService: CompanyService) {
+  eor: any; //For error
+
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public companyService: CompanyService) {
     this.hasValidName = true;
     this.hasValidDate = true;
     this.validate = true;
@@ -23,42 +24,45 @@ export class AddCompanyPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddCompanyPage');
   }
-  saveCompany() {
+
+  saveCompany() { //For adding company to DB
     this.hasValidName = true;
     this.hasValidDate = true;
     this.validate = true;
-    if(this.name === undefined||this.name.length < 2 ) {
+    if (this.name === undefined || this.name.length < 2) {
       this.hasValidName = false;
       this.validate = false;
     }
-    if(this.ionicDateDisp === undefined) {
+    if (this.ionicDateDisp === undefined) {
       this.hasValidDate = false;
       this.validate = false;
     }
-    if(this.validate) {
-      console.log(this.ionicDateDisp);
+    if (!this.validate) {
+      console.log('Not Validated');
+    }
+    else{
       let date = new Date(this.ionicDateDisp);
-      console.log(date.getMonth()+1);
-      console.log(date.getDate());
-      console.log(date.getFullYear());
-      let updatedDate = date.getMonth()+1+ "-" + date.getDate() +"-"+ date.getFullYear();
+      let updatedDate = date.getMonth() + 1 + "-" + date.getDate() + "-" + date.getFullYear(); //date.getMonth() + 1, Because of zero indexing
       this.companyService.addCompany(this.name, updatedDate).subscribe(response => {
-          console.log(response);
-          let toast = this.toastCtrl.create({
-            message: 'Item Saved',
-            duration: 500,
-            position: 'middle',
-          });
-          toast.onDidDismiss(() => {
-            this.navCtrl.popToRoot();
-          });
-          toast.present();
+          this.presentToast("Company Added");
         },
         err => {
           this.eor = err;
           console.log(this.eor.status);
+          this.presentToast("Check Internet, operation Failed");
         })
     }
   }
 
+  presentToast(message) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 500,
+      position: 'middle',
+    });
+    toast.onDidDismiss(() => {
+      this.navCtrl.popToRoot();
+    });
+    toast.present();
+  }
 }

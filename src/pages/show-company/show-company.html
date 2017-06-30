@@ -1,16 +1,14 @@
-
 <ion-header>
-
   <ion-navbar>
-    <ion-title>{{ company.name }}   </ion-title>
+    <ion-title>{{ company.name }}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="onEditClick()">
         Edit
       </button>
-    </ion-buttons >
-    <ion-buttons end >
+    </ion-buttons>
+    <ion-buttons end>
       <button ion-button clear (click)="onDeleteClick(company)">
-        <ion-icon name="trash"  >
+        <ion-icon name="trash">
         </ion-icon>
       </button>
     </ion-buttons>
@@ -20,15 +18,17 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <ion-label>Name </ion-label>
-      <ion-input type="text" [(ngModel)]="company.name" [disabled]="editValue" minlength="2" maxlength="70" text-right></ion-input>
+      <ion-label>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="company.name" [disabled]="editValue" minlength="2" maxlength="70"
+                 text-right></ion-input>
     </ion-item>
     <ion-item *ngIf='!hasValidName'>
       <font size="2">Enter a valid name</font>
     </ion-item>
     <ion-item>
       <ion-label>Date</ion-label>
-      <ion-datetime displayFormat="MM-DD-YYYY" min="2017-07-01" max="2020" [(ngModel)]="ionicDateDisp" [disabled]="editValue" pickerFormat="MM DD YYYY" ></ion-datetime>
+      <ion-datetime displayFormat="MM-DD-YYYY" min="2017-07-01" max="2020" [(ngModel)]="ionicDateDisp"
+                    [disabled]="editValue" pickerFormat="MM DD YYYY"></ion-datetime>
     </ion-item>
     <ion-item *ngIf='!hasValidDate'>
       <font size="2">Enter a valid Date</font>

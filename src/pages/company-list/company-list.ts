@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {CompanyService} from '../../app/services/company.service';
 import {ShowCompanyPage} from '../show-company/show-company';
-import {HomePage} from '../home/home';
 import {AddCompanyPage} from '../add-company/add-company';
 
 @IonicPage()
@@ -13,45 +12,48 @@ import {AddCompanyPage} from '../add-company/add-company';
 export class CompanyListPage {
   companies: any;
   eor: any;
-  constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private companyService: CompanyService) {
+
+  constructor(public navCtrl: NavController, private toastCtrl: ToastController, private companyService: CompanyService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CompanyListPage');
   }
-  ngOnInit() {
+
+  ngOnInit() { // Get companies from API on init
     this.getCompanies();
   }
+
   getCompanies() {
     this.companyService.getCompanies().subscribe(response => {
-      this.companies = response;
-    },
+        this.companies = response;
+      },
       err => {
         this.eor = err;
         console.log(this.eor.status);
-        this.presentToast();
+        let toast = this.toastCtrl.create({ // if internet connection failed or DATA query not completed
+          message: 'Please Check your Internet Connection',
+          duration: 3000,
+          position: 'middle'
+        });
+
+        toast.onDidDismiss(() => {
+          this.navCtrl.pop();
+        });
+
+        toast.present();
       }
     )
   }
-  companySelected(company) {
+
+  companySelected(company) { // For loading the new page for displaying the selected item in detail
     this.navCtrl.push(ShowCompanyPage, {
       company: company
     });
   }
-  presentToast() {
-    let toast = this.toastCtrl.create({
-      message: 'Please Check your Internet Connection',
-      duration: 3000,
-      position: 'middle'
-    });
 
-    toast.onDidDismiss(() => {
-      this.navCtrl.pop();
-    });
-
-    toast.present();
-  }
-  addCompany(){
+  addCompany() { // For adding new company
     this.navCtrl.push(AddCompanyPage);
   }
+
 }

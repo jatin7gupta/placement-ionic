@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {StudentService} from '../../app/services/student.service';
 import {RegistrationService} from "../../app/services/registration.service";
@@ -23,32 +23,29 @@ export class ShowRegistrationsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public studentService: StudentService, public toastCtrl: ToastController, public registrationService: RegistrationService) {
     this.company = navParams.get('company');
-    console.log(this.company);
     this.registrations = navParams.get('registration');
     this.studentService.getStudents().subscribe(response => {
         this.students = response; //this is async. for loops execute before the students can came
         this.init();
-        console.log(this.students);
       },
       err => {
         this.eor = err;
-        this.presentToast();
+        this.presentToast('Check Internet');
         console.log(this.eor.status);
       }
     );
-    this.registrationService.getRegistrations().subscribe(response =>{
+    this.registrationService.getRegistrations().subscribe(response => {
       this.registrations = response;
-      this.init(); //semaphore has poor performance. Created a local anonymous callback
-      console.log(this.registrations);
-    },err => {
+      this.init(); // Created a local anonymous callback
+    }, err => {
       console.log(err);
-      this.presentToast();
+      this.presentToast('Check Internet');
     });
   }
 
-  init(){//done
-    if(this.registrations === undefined || this.students === undefined) return;
-    for(let regObj of this.registrations) {
+  init() {
+    if (this.registrations === undefined || this.students === undefined) return;
+    for (let regObj of this.registrations) {
       if (regObj.cId === this.company._id) {
         for (let studentObj of this.students) {
           if (studentObj._id === regObj.sId) {
@@ -67,22 +64,20 @@ export class ShowRegistrationsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShowRegistrationsPage');
-
   }
-  presentToast() {
+
+  presentToast(message) {
     let toast = this.toastCtrl.create({
-      message: 'Please Check your Internet Connection',
-      duration: 3000,
+      message: message,
+      duration: 1000,
       position: 'middle'
     });
 
     toast.onDidDismiss(() => {
-      this.navCtrl.pop();
+      this.navCtrl.popToRoot();
     });
 
     toast.present();
   }
-  fillRegistrationList() {
 
-  }
 }
